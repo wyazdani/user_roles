@@ -14,3 +14,14 @@
 Route::prefix('userroles')->group(function() {
     Route::get('/', 'UserRolesController@index');
 });
+
+
+
+Route::group(['middleware' => ['auth','web']],function(){
+    Route::resource('roles','RoleController');
+    Route::resource('users','UserController');
+    Route::resource('dashboard','DashboardController');
+});
+Route::group(['middleware' => ['auth','web','roles'],'roles'=>['admin']],function(){
+
+});

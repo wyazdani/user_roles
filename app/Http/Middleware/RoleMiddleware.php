@@ -22,8 +22,12 @@ class RoleMiddleware
             if($request->user()->hasRole($roles) || !$roles)
             {
                 return $next($request);
-
             }
+            /*if($request->user()->hasAnyRole($roles) || !$roles)
+            {
+                return $next($request);
+
+            }*/
         }else{
             return redirect()->to('login');
         }

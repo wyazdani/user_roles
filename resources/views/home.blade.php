@@ -7,6 +7,8 @@
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
+                {{--{{dd(auth()->user()->allroles)}}--}}
+                {{--{{hasanyrole(['manager'])}}--}}
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">

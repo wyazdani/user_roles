@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\UserRoles\Entities\Role;
+use Modules\UserRoles\Entities\UserRole;
 
 class User extends Authenticatable
 {
@@ -37,9 +39,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function allroles()
+    {
+        return $this->hasManyThrough(Role::class,UserRole::class,'user_id','id');
+    }
+    public function role()
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id');
+    }
+
     public function hasRole($roles)
     {
         $this->have_role = $this->getUserRole();
+
 
         if($this->have_role->name == 'Root') {
             return true;
@@ -64,4 +77,35 @@ class User extends Authenticatable
     {
         return (strtolower($need_role)==strtolower($this->have_role->name)) ? true : false;
     }
+    public function hasAnyRole($roles)
+    {
+        $this->have_roles = $this->getUserRoles();
+
+
+        if(is_array($roles)){
+            foreach($roles as $need_role){
+                if($this->checkIfUserHasAnyRole($need_role)) {
+                    return true;
+                }
+            }
+        } else{
+            return $this->checkIfUserHasAnyRole($roles);
+        }
+        return false;
+    }
+    private function getUserRoles()
+    {
+        /*return $this->role()->getResults();*/
+        return $this->allroles()->getResults();
+    }
+
+    private function checkIfUserHasAnyRole($need_role)
+    {
+        foreach ($this->have_roles as $have_role){
+
+            return (strtolower($need_role)==strtolower($have_role->name)) ? true : false;
+        }
+
+    }
+
 }
