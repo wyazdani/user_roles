@@ -8,8 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('title')
     <link rel="icon" type="image/png" href="{!! asset('images/favicon.png') !!}"/>
-    <link rel="stylesheet" href="{!! asset('css/datatable.css') !!}">
     <link media="all" rel="stylesheet" type="text/css" href="{!! asset('css/admin.css') !!}" />
+    <link media="all" rel="stylesheet" type="text/css" href="{!! asset('css/bootstrap-multiselect.css') !!}" />
 </head>
 <body>
 <div id="wrapper" class="{!! empty(auth()->user())?'login':'' !!}">
@@ -18,7 +18,7 @@
             <div class="logo">
                 {{--<a href="{!! route('admin.index') !!}">--}}
                     <?php /*$logo =   \App\Helpers\Settings::get_logo();*/?>
-                    <img src="" alt="UserRoles" style="width: 100%">
+                    <img src="{{url('images/saqib.png')}}" alt="UserRoles" >
                 {{--</a>--}}
             </div>
             <div class="topbar">
@@ -28,8 +28,13 @@
                         <ul class="dropdown-menu" aria-labelledby="useraccount">
                             {{--<li><a href="javascript:void(0);"><i class="fal fa-user-plus"></i> <span>My profile</span></a></li>--}}
                             <li class="divider"></li>
-                            {{--<li><a href="#"><i class="fal fa-cogs"></i> <span>Account settings</span></a></li>--}}
-                            <li><a  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            @foreach(auth()->user()->user_roles as $role)
+                                <li><a href="{{ url('change-role/'.$role->role_id) }}"><i class="fal fa-cogs"></i> <span>Switch Role To {{$role->role->name}}</span></a></li>
+                            @endforeach
+
+                            <li>
+
+                                <a  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fal fa-sign-out-alt"></i>
                                     <span>Logout</span>
                                 </a>
@@ -78,6 +83,7 @@
 </div>
 <script src="{{ url('js/jquery.js') }}"></script>
 <script src="{{ url('js/admin.js') }}"></script>
+<script src="{{ url('js/bootstrap-multiselect.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

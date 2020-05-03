@@ -42,7 +42,11 @@ class User extends Authenticatable
 
     public function allroles()
     {
-        return $this->hasManyThrough(Role::class,UserRole::class,'user_id','id');
+        return $this->hasManyThrough(Role::class,UserRole::class,'role_id','id','id','id');
+    }
+    public function user_roles()
+    {
+        return $this->hasMany(UserRole::class);
     }
     public function role()
     {

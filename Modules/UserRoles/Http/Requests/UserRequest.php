@@ -13,10 +13,11 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'name'      =>  'required',
             'email'      =>  'required|email|unique:users,email,'.$this->user,
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|nullable|confirmed'
         ];
     }
 

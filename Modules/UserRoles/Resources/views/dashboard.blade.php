@@ -10,6 +10,7 @@
             </div>
         </div>
     </div>
+    @if(hasrole('admin'))
     <div class="row">
         <div class="col-lg-12">
             <div class="panel">
@@ -53,6 +54,7 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection
 
 @section('scripts')

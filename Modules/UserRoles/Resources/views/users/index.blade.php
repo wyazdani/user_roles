@@ -22,21 +22,27 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Roles</th>
+                                <th>Actions</th>
                             </tr>
-                            {{--@foreach($roles as $role)
+                            @foreach($users as $user)
                                 <tr>
-                                    <td>{{$role->name}}</td>
-                                    <td>{{$role->description}}</td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>
+                                        @foreach($user->user_roles as $role)
+                                            {{$role->role->name}},
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <ul class="icon-list">
-                                            <li><a href="{!! route('roles.edit',$role->id) !!}" ><i class="fal fa-edit"></i></a></li>
+                                            <li><a href="{!! route('users.edit',$user->id) !!}" ><i class="fal fa-edit"></i></a></li>
                                         </ul>
                                     </td>
                                 </tr>
-                            @endforeach--}}
+                            @endforeach
                         </table>
                     </div>
-                    {{--{{$roles->links()}}--}}
+                    {{$users->links()}}
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 namespace Modules\UserRoles\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -75,5 +76,17 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function switch_role($role_id)
+    {
+        if ($role_id){
+            $user   =   User::find(auth()->user()->id);
+            $user->role_id  =   $role_id;
+            $user->save();
+        }
+
+        return redirect()->back();
+
     }
 }
