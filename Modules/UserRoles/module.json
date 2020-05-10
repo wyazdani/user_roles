@@ -1,0 +1,13 @@
+{
+    "name": "UserRoles",
+    "alias": "userroles",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\UserRoles\\Providers\\UserRolesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
