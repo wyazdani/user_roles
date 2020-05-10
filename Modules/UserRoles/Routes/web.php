@@ -18,11 +18,15 @@ Route::prefix('userroles')->group(function() {
 
 
 Route::group(['middleware' => ['auth','web']],function(){
+
     Route::resource('roles','RoleController');
+    // Permissions
+    Route::resource('permissions', 'PermissionsController');
     Route::resource('users','UserController');
     Route::resource('dashboard','DashboardController');
     Route::get('change-role/{role_id}','DashboardController@switch_role');
 });
 Route::group(['middleware' => ['auth','web','roles'],'roles'=>['admin']],function(){
+
 
 });

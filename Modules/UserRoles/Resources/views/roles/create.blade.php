@@ -35,6 +35,52 @@
                             </span>
                             @enderror
                         </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="name">Posts Permissions</label>
+                                @foreach ($permissions as $permission)
+                                    @if ($permission->for == 'post')
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->name }}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="name">User Permissions</label>
+                                @foreach ($permissions as $permission)
+                                    @if ($permission->for == 'user')
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->name }}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label for="name">User Permissions</label>
+                                @foreach ($permissions as $permission)
+                                    @if ($permission->for == 'other')
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->name }}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="name">Role Permissions</label>
+                                @foreach ($permissions as $permission)
+                                    @if ($permission->for == 'role')
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->name }}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+
                         <div class="pull-right">
                             <a href="{!! route('roles.index') !!}" class="btn btn-danger">Cancel</a>
                             <button type="submit" class="btn btn-success">Create</button>
@@ -45,3 +91,33 @@
         </div>
     </form>
 @endsection
+<script src="{{ url('/js/jquery.min.js') }}"></script>
+
+<script>
+    $(document).ready(function(){
+        $(document).on('click', '.role-permission', function(){
+            var roleName = $(this).attr('data-role');
+            var page = $(this).attr('data-page');
+            var key = $(this).attr('data-key');
+            var val = 0;
+            if($(this).is(':checked')){ val = 1; }
+            $.ajax({
+                type: "post",
+                url: "{{ url('/permission') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    role: roleName,
+                    page: page,
+                    key: key,
+                    value: val
+                },
+                success: function(){
+                    console.log('Assigned - ' + key + ' = ' + val + ' - to ' + roleName);
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script>

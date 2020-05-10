@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Modules\UserRoles\Entities\Role;
 use Modules\UserRoles\Entities\UserRole;
@@ -29,8 +30,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles  =   Role::get();
-        return view('userroles::users.create',compact('roles'));
+        if (Auth::user()->can('users.create')) {
+            $roles  =   Role::get();
+            return view('userroles::users.create',compact('roles'));
+        }
+        return redirect('dashboard');
     }
 
     /**
@@ -75,9 +79,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user   =   User::find($id);
-        $roles  =   Role::get();
-        return view('userroles::users.edit',compact('user','roles'));
+        if (Auth::user()->can('users.update')) {
+            $user = User::find(decrypt($id));
+            $roles = Role::get();
+            return view('userroles::users.edit', compact('user', 'roles'));
+        }
+            return  redirect('dashboard');
     }
 
     /**

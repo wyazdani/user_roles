@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    <title> Roles | {{ config('app.name', 'Laravel') }}</title>
+    <title> Permissions | {{ config('app.name', 'Laravel') }}</title>
 @stop
 @section('content')
     <div class="row">
@@ -9,38 +9,34 @@
             <div class="panel">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h2>Roles</h2>
+                        <h2>Permissions</h2>
                     </div>
-                    @can('roles.create', Auth::user())
                     <div class="pull-right btn-group">
-                        <a href="{!! route('roles.create') !!}" class="btn btn-success">Create Role</a>
+                        <a href="{!! route('permissions.create') !!}" class="btn btn-success">Create Permissions</a>
                     </div>
-                    @endcan
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
+                                <th>Permission Name</th>
+                                <th>Permission For</th>
                                 <th>Action</th>
                             </tr>
-                            @foreach($roles as $role)
+                            @foreach($permissions as $permission)
                             <tr>
-                                <td>{{$role->name}}</td>
-                                <td>{{$role->description}}</td>
+                                <td>{{$permission->name}}</td>
+                                <td>{{$permission->for}}</td>
                                 <td>
-{{--                                    @can('roles.update', Auth::user())--}}
                                     <ul class="icon-list">
-                                        <li><a href="{!! route('roles.edit',encrypt($role->id)) !!}" ><i class="fal fa-edit"></i></a></li>
+                                        <li><a href="{!! route('permissions.edit',encrypt($permission->id)) !!}" ><i class="fal fa-edit"></i></a></li>
                                     </ul>
-{{--                                   @endcan--}}
                                 </td>
                             </tr>
                             @endforeach
                         </table>
                     </div>
-                    {{$roles->links()}}
+                    {{$permissions->links()}}
                 </div>
             </div>
         </div>

@@ -9,6 +9,9 @@ use Illuminate\Routing\Controller;
 
 class DashboardController extends Controller
 {
+    public function __construct() {
+        $this->middleware('can:users.dashboard');
+    }
     /**
      * Display a listing of the resource.
      * @return Response

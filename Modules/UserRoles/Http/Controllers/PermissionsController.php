@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\UserRoles\Entities\Permission;
-use Modules\UserRoles\Entities\Role;
-use Modules\UserRoles\Http\Requests\RoleRequest;
+use Modules\UserRoles\Http\Requests\PermissionRequest;
 
-class RoleController extends Controller
+
+class PermissionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class RoleController extends Controller
     public function index()
     {
 
-        $roles  =   Role::paginate(20);
-        return view('userroles::roles.index',compact('roles'));
+        $permissions  =   Permission::paginate(20);
+        return view('userroles::permissions.index',compact('permissions'));
     }
 
     /**
@@ -28,25 +28,23 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all();
-
-        return view('userroles::roles.create')->with(compact('permissions'));
+        return view('userroles::permissions.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param PermissionRequest $request
      * @return Response
      */
-    public function store(RoleRequest $request)
+    public function store(PermissionRequest $request)
     {
-      $role =  Role::create([
-            'name'  =>  $request->name,
-            'description'   =>  $request->description
-        ]);
-        $role->permissions()->sync($request->permission);
 
-        return redirect()->route('roles.index');
+        Permission::create([
+            'name'  =>  $request->name,
+            'for'   =>  $request->for
+        ]);
+
+        return redirect()->route('permissions.index');
     }
 
     /**
@@ -56,7 +54,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('userroles::show');
+        return view('userroles::permissions.show');
     }
 
     /**
@@ -66,33 +64,30 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role   =   Role::find(decrypt($id));
-        $permissions = Permission::all();
-        return view('userroles::roles.edit',compact('role','permissions'));
+        $permission   = Permission::find(decrypt($id));
+        return view('userroles::permissions.edit',compact('permission'));
     }
 
     /**
      * Update the specified resource in storage.
-     * @param RoleRequest $request
+     * @param PermissionRequest $request
      * @param int $id
      * @return Response
      */
-    public function update(RoleRequest $request, $id)
+    public function update(PermissionRequest $request, $id)
     {
-        $role   =   Role::find($id);
+        $role   =   Permission::find($id);
         $role->update([
             'name'  =>  $request->name,
-            'description'   =>  $request->description
+            'for'   =>  $request->for
         ]);
-        $role->permissions()->sync($request->permission);
-
-        return redirect()->route('roles.index');
+        return redirect()->route('permissions.index');
     }
 
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Response
+     * @return void
      */
     public function destroy($id)
     {

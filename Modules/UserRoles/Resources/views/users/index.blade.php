@@ -11,9 +11,12 @@
                     <div class="pull-left">
                         <h2>Users</h2>
                     </div>
+                    @can('users.create', Auth::user())
+
                     <div class="pull-right btn-group">
                         <a href="{!! route('users.create') !!}" class="btn btn-success">Create User</a>
                     </div>
+                    @endcan
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -34,9 +37,11 @@
                                         @endforeach
                                     </td>
                                     <td>
+                                        @can('users.update', Auth::user())
                                         <ul class="icon-list">
-                                            <li><a href="{!! route('users.edit',$user->id) !!}" ><i class="fal fa-edit"></i></a></li>
+                                            <li><a href="{!! route('users.edit',encrypt($user->id)) !!}" ><i class="fal fa-edit"></i></a></li>
                                         </ul>
+                                         @endcan
                                     </td>
                                 </tr>
                             @endforeach
