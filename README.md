@@ -13,7 +13,7 @@ Implemented a custom roles & permissions which include following features:
 		
 Installation:
 
-		- Simply Download Code.
+		- Simply Clone or Download.
 		- Composer Install/Update.
 		- Run Migrations
 		- Run Seeders (Module Seeders)
