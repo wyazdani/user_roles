@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\UserRoles\Entities\Permission;
 use Modules\UserRoles\Entities\Role;
 use Modules\UserRoles\Entities\UserRole;
 
@@ -112,7 +113,32 @@ class User extends Authenticatable
 
     }
 
+    public function hasPermission($roles,$routeName)
+    {
+        $this->have_role = $this->getUserRole();
 
+        if($this->have_role->name == 'Root') {
+            return true;
+        }
+        foreach ($this->have_role->permissions as $permission_key=>$permission){
+            if ($permission->name ==$routeName){
+                return [
+                    'success'       =>  true,
+                    'role'          =>  $this->have_role,
+                    'permission'    =>  $permission,
+                    'routeName'     =>  $routeName
+                ];
+            }
+        }
+        $permission =   Permission::where('name','=',$routeName)->first();
+        return [
+            'success'       =>  false,
+            'role'          =>  $this->have_role,
+            'permission'    =>  $permission,
+            'routeName'     =>  $routeName
+        ];
+        return false;
+    }
 
 
 }

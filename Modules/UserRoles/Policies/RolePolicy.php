@@ -31,7 +31,7 @@ class RolePolicy
         return $this->checkPermission($user,'roles.index');
 
     }
-
+    
     public function update(User $user){
 
         return $this->checkPermission($user,'roles.edit');
