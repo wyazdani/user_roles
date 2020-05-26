@@ -11,6 +11,8 @@ Implemented a custom roles & permissions which include following features:
 		- A user can have multiple roles.
 		- Roles can be switched when logged in.
         - Simple Admin Panel Layout 
+        
+        
 		
 Installation:
 
