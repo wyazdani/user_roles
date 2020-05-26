@@ -6,10 +6,11 @@ Implemented a custom roles & permissions which include following features:
 
 
 		- User Can create Roles and assign permissions to roles.
-		- user Can assign roles to users and create users.
+		- User Can create users and assign roles.
 		- Admin Role (All permissions) can be assigned to any desired user.
 		- A user can have multiple roles.
 		- Roles can be switched when logged in.
+        - Simple Admin Panel Layout 
 		
 Installation:
 
